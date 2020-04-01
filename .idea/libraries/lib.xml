@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/workflow-api-01/lib/mqseries-api-jar.jar!/" />
+      <root url="jar://$PROJECT_DIR$/workflow-api-01/lib/jira-api-jar.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

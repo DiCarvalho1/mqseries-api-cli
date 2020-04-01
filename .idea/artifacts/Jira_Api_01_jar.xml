@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Jira-Api-01:jar">
+    <output-path>$PROJECT_DIR$/workflow-api-01/lib</output-path>
+    <root id="archive" name="jira-api-jar.jar">
+      <element id="module-output" name="Jira-Api-01" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/workflow-api-01/lib/jira-api-jar.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

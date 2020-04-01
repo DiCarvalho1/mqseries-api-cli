@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="workflow-manager-api">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/workflow-manager-api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

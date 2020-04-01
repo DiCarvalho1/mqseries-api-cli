@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mqseries-api-cli">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mqseries-api-cli-master/dist/mqseries-api-cli.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

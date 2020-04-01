@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/Jira-Api-01/src/main/java/br/com/pabloraimundo/jira_api/SubStatus.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workflow-api-01/src/main/java/br/com/pabloraimundo/jira_connection/Jira_Rest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workflow-api-01/src/main/java/br/com/pabloraimundo/workflow_manager/Jira_Manager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workflow-api-01/src/main/java/br/com/pabloraimundo/workflow_manager/Manager.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

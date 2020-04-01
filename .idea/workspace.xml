@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="mqseries-api-jar:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="956513ab-345f-47b7-a15b-822c82ba591c" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="DevSecOps 2.1" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZcVRx5o4ArVLAAhUq2BXJUSPyb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="devsecops_2.1" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.20804597" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="DevSecOps 2.1" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <module name="DevSecOps 2.1" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="956513ab-345f-47b7-a15b-822c82ba591c" name="Default Changelist" comment="" />
+      <created>1585138365181</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585138365181</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#Project_Structure" timestamp="1585687060857">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1585687060857" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585321595042">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585321595042" />
+    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser" timestamp="1585673991408">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="235" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1585673991408" />
+    <state x="690" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585676060008">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585676060008" />
+    <state x="734" y="210" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1585659508863">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="734" y="210" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585659508863" />
+    <state x="531" y="435" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1585672986896">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="531" y="435" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585672986896" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1585687983377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1585687983377" />
+    <state x="625" y="218" width="674" height="603" key="NewModule_or_Project.wizard" timestamp="1585688006005">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="625" y="218" width="674" height="603" key="NewModule_or_Project.wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1585688006005" />
+    <state x="466" y="105" key="SettingsEditor" timestamp="1585686433778">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="466" y="105" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1585686433778" />
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1585687658692">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="661" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585687658692" />
+    <state x="342" y="140" key="new project wizard" timestamp="1585687944180">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="140" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1585687944180" />
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup" timestamp="1585320444770">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585320444770" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585315246245">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1585315246245" />
+  </component>
+</project>

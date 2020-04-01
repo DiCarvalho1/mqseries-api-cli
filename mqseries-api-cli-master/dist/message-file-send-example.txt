@@ -1,0 +1,1 @@
+This is the content of file 'message-file-send-example.txt' sent in message
