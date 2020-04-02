@@ -59,12 +59,4 @@ public class Jira_Manager {
         return idOrquestrador = Integer.toString(OrquestradorNumero);
     }
 
-
-    
-
-
-
-	
-
-	
 }

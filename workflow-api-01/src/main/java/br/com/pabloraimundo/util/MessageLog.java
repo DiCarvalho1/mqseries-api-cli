@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class MessageLog {
 
     public static String Horario(){
-        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " ";
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " ";
     }
 
     public static String UpdateSubStatus(String idOrquestrador){

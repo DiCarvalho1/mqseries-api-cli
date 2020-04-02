@@ -1,6 +1,7 @@
 package br.com.pabloraimundo.jira_connection;
 
 import br.com.pabloraimundo.jira_api.*;
+import br.com.pabloraimundo.util.GetProperties;
 import br.com.pabloraimundo.util.MessageLog;
 import br.com.pabloraimundo.util.ExceptionsMessages;
 import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
@@ -45,7 +46,7 @@ public class Jira_Rest {
                 System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
             }
 
-            String jiraComment = JiraCommentWorkSucces(status.getValue(),"Validação", managerArgsParse.getChangemanPackage(), SubStatus.EMEXECUCAO);
+            String jiraComment = ReplaceJiraComment("validacaosucesso");
 
             try {
                 System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -91,7 +92,7 @@ public class Jira_Rest {
                 System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
             }
 
-            String jiraComment = JiraCommentWorkSucces(status.getValue(),"Execução", managerArgsParse.getChangemanPackage(), SubStatus.EXECUTADO);
+            String jiraComment = ReplaceJiraComment("execucaosucesso");
 
             try {
                 System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -129,7 +130,7 @@ public class Jira_Rest {
                 .findAny()
                 .orElse(null);
 
-        String jiraComment = JiraCommentWorkFailed(status.getValue(), "Validação", managerArgsParse.getCodigoRetorno(), managerArgsParse.getChangemanPackage(), SubStatus.FALHAREQUISICAO);
+        String jiraComment = ReplaceJiraComment("validacaoerro");
 
         try {
             System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -161,7 +162,7 @@ public class Jira_Rest {
                 .findAny()
                 .orElse(null);
 
-        String jiraComment =  JiraCommentWorkFailed(status.getValue(),"Execução", managerArgsParse.getCodigoRetorno(), managerArgsParse.getChangemanPackage(), SubStatus.FALHAEXECUCAO);
+        String jiraComment =  ReplaceJiraComment("execucaoerro");
 
         try {
             System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -173,33 +174,15 @@ public class Jira_Rest {
         System.out.println(MessageLog.UpdateFailedLog(SubStatus.FALHAEXECUCAO.getDescription()));
     }
 
-    private String JiraCommentWorkSucces(String status, String acao, String pacote, SubStatus subStatus) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        LocalDateTime now = LocalDateTime.now();
+    private String ReplaceJiraComment(String wichMessage){
+        String jiraComment = GetProperties.GetJiraComment(wichMessage);
 
-        String inputJson = "{\n" +
-                "\"body\": \" *+" + status +"+* \\n" +
-                "Status: *{color:#00875a}SUCESSO {color}* \\n" +
-                "Ação: *"+ acao + "* \\n" +
-                "Return Code: *00* \\n" +
-                "Mensagem: *" + managerArgsParse.getReturnMessage() + "* \\n" +
-                "Sub-Status: *" + subStatus.getDescription() + "* \" \n" +
-                "}";
+        jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getCodigoRetorno());
+        jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno());
+        jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage());
+        jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().replaceAll("^\\s+", ""));
+        jiraComment = jiraComment.replace("<***instanciaMQ***>", managerArgsParse.getInstancia().replaceAll("^\\s+", ""));
 
-        return inputJson;
-    }
-
-    private String JiraCommentWorkFailed(String status, String acao, String returnCode, String pacote, SubStatus subStatus) {
-        String inputJson = "{\n" +
-
-                "\"body\": \" *+" + status + "+* \\n" +
-                "Status: *{color:#de350b}FALHA{color}* \\n" +
-                "Ação: *" + acao + "* \\n" +
-                "Return Code: *" + returnCode + "* \\n" +
-                "Mensagem: *"+ managerArgsParse.getReturnMessage() +"* \\n" +
-                "Sub-Status: *" + subStatus.getDescription() + "* \" \n" +
-                "}";
-
-        return inputJson;
+        return jiraComment;
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.josemarsilva.mqseries_api_cli.App;
 import br.com.josemarsilva.mqseries_api_cli.CliArgsParser;
+import br.com.pabloraimundo.util.GetProperties;
 import br.com.pabloraimundo.util.MessageLog;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -35,6 +36,7 @@ public class Manager {
 			System.out.println(MessageLog.Horario() + "Nenhuma mensagem encontrada");
 			main(args);
 		} else {
+			int voltasNoLoop = 1;
 			for (String string : message) {
 				if (!TreatMessage(string)) {
 					return;
@@ -71,7 +73,10 @@ public class Manager {
 				catch (Exception e){
 					System.out.println(e);
 				} finally {
-					main(args);
+					if(voltasNoLoop == message.size()){
+						main(args);
+					}
+					voltasNoLoop++;
 				}
 			}
 		}

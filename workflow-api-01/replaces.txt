@@ -1,0 +1,5 @@
+<***returntype***> - pegar o valor do return_type
+<***returncode***> - pegar o valor do return_code
+<***mensagemMQ***> - pegar mensagem da mensagem MQ
+<***siteMQ***> - pegar o site da mensagem MQ
+<***instanciaMQ***> - pegar a instancia da mensagem MQ
