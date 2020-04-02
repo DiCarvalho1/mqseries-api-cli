@@ -28,7 +28,7 @@
         "return_code": "[01-99]",
         "ticket_status": "PROMOVIDO TU",
         "status_mainframe": "FALHA NA EXECUÇÃO",    
-        "message_template": "{ \n \"body\": \"*+PROMOVIDO TU+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA REQUISIÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        "message_template": "{ \n \"body\": \"*+PROMOVIDO TU+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
     }
 }
 

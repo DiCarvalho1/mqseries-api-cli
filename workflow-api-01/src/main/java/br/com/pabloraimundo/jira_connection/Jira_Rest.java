@@ -1,13 +1,11 @@
 package br.com.pabloraimundo.jira_connection;
 
 import br.com.pabloraimundo.jira_api.*;
-import br.com.pabloraimundo.util.GetProperties;
+import br.com.pabloraimundo.util.GetJson;
 import br.com.pabloraimundo.util.MessageLog;
 import br.com.pabloraimundo.util.ExceptionsMessages;
 import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Jira_Rest {
@@ -18,12 +16,12 @@ public class Jira_Rest {
         this.managerArgsParse = managerArgsParse;
     }
 
-    public void ValidacaoSucesso(String idOrquestrador, String customFieldId, String apiChangeman) {
+    public void ValidacaoSucesso(String idOrquestrador) {
 
         List<Fields> customFieldValue = null;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getCustomFieldId());
+            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
         }
@@ -64,12 +62,12 @@ public class Jira_Rest {
         }
     }
 
-    public void ExecucaoSucesso(String idOrquestrador, String customFieldId, String apiChangeman) {
+    public void ExecucaoSucesso(String idOrquestrador) {
 
         List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getCustomFieldId());
+            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
         }
@@ -120,7 +118,7 @@ public class Jira_Rest {
         List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getCustomFieldId());
+            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
         }
@@ -152,7 +150,7 @@ public class Jira_Rest {
         List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getCustomFieldId());
+            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
         }
@@ -175,9 +173,9 @@ public class Jira_Rest {
     }
 
     private String ReplaceJiraComment(String wichMessage){
-        String jiraComment = GetProperties.GetJiraComment(wichMessage);
+        String jiraComment = GetJson.GetJiraComment(wichMessage);
 
-        jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getCodigoRetorno());
+        jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getTipoResposta());
         jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno());
         jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage());
         jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().replaceAll("^\\s+", ""));

@@ -1,18 +1,12 @@
 package br.com.pabloraimundo.workflow_manager;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 
 import br.com.josemarsilva.mqseries_api_cli.App;
 import br.com.josemarsilva.mqseries_api_cli.CliArgsParser;
-import br.com.pabloraimundo.util.GetProperties;
+import br.com.pabloraimundo.util.GetJson;
 import br.com.pabloraimundo.util.MessageLog;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 
 public class Manager {
 	
@@ -53,7 +47,7 @@ public class Manager {
 				String siteMaquina = string.substring(48,58);
 				String instancia = string.substring(58,68);
 				String returMessage = string.substring(68);
-				String customFieldId = managerArgsParse.getSubStatusId();
+				String subStatusId = GetJson.GetCustomFieldJson("status_mainframe");
 
 				managerArgsParse.setApiChangeman(apiChangeman);
 				managerArgsParse.setTipoResposta(tipoResposta);
@@ -64,7 +58,7 @@ public class Manager {
 				managerArgsParse.setSiteMaquina(siteMaquina);
 				managerArgsParse.setInstancia(instancia);
 				managerArgsParse.setReturnMessage(returMessage);
-				managerArgsParse.setCustomFieldId(customFieldId);
+				managerArgsParse.setSubStatusId(subStatusId);
 
 				Jira_Manager jira_Manager = new Jira_Manager(managerArgsParse);
 				try {
@@ -92,5 +86,5 @@ public class Manager {
 		
 		return messageLength;
 	}
-		
+
 }

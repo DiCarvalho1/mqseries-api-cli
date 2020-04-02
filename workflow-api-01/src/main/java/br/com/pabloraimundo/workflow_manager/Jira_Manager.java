@@ -24,7 +24,7 @@ public class Jira_Manager {
         	
             if(managerArgsParse.getCodigoRetorno().equals("00")) {
 				Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
-                jira_rest.ValidacaoSucesso(idOrquestrador, managerArgsParse.getCustomFieldId(), managerArgsParse.getApiChangeman());
+                jira_rest.ValidacaoSucesso(idOrquestrador);
             }
             else {
             	Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
@@ -36,7 +36,7 @@ public class Jira_Manager {
         	
 			if (managerArgsParse.getCodigoRetorno().equals("00")) {
 				Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
-				jira_rest.ExecucaoSucesso(idOrquestrador, managerArgsParse.getCustomFieldId(), managerArgsParse.getApiChangeman());
+				jira_rest.ExecucaoSucesso(idOrquestrador);
 			}
 			else {
 				Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);

@@ -28,14 +28,13 @@ public class ManagerArgsParse {
     String instancia;
 
 	String returnMessage;
-    String customFieldId;
+	String subStatusId;
     
 //  Jira arg Properties...
     String url; 
     String user; 
-    String password; 
-    String subStatusId;
-    
+    String password;
+
 	CliArgsParser cliArgsParser = null;
         
     public ManagerArgsParse( String[] args, CliArgsParser cliArgsParser ) {
@@ -68,12 +67,6 @@ public class ManagerArgsParse {
         		.longOpt("password") 
         		.required(true)
         		.desc("Jira password")
-        		.hasArg()
-        		.build();
-        Option subStatusIdOption = Option.builder("subStatusId")
-        		.longOpt("subStatusId") 
-        		.required(true) 
-        		.desc("Sub-Status Id")
         		.hasArg()
         		.build();
         
@@ -120,7 +113,6 @@ public class ManagerArgsParse {
         options.addOption(urlOption);
         options.addOption(userOption);
         options.addOption(passwordOption);
-        options.addOption(subStatusIdOption);
         options.addOption(hostOption);
         options.addOption(portOption);
         options.addOption(channelOption);
@@ -143,7 +135,6 @@ public class ManagerArgsParse {
 	        	this.setUrl( cmdLine.getOptionValue("url", ""));
 	        	this.setUser( cmdLine.getOptionValue("user", ""));
 	        	this.setPassword( cmdLine.getOptionValue("password",""));
-	        	this.setSubStatusId(cmdLine.getOptionValue("subStatusId",""));
 	        		        	
 	        	// Set MQ properties from Options...
 	        	cliArgsParser.setHost( cmdLine.getOptionValue("host", "") );
@@ -254,17 +245,6 @@ public class ManagerArgsParse {
 
 	public void setInstancia(String instancia) { this.instancia = instancia; }
 
-
-
-	public String getCustomFieldId() {
-		return customFieldId;
-	}
-
-
-
-	public void setCustomFieldId(String customFieldId) {
-		this.customFieldId = customFieldId;
-	}
 
 
 	public String getReturnMessage() { return returnMessage; }

@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class GetProperties {
+public class GetJson {
 
     public static String GetJiraComment(String wichMessage){
         String comentarioBody = null;
@@ -23,11 +23,30 @@ public class GetProperties {
             JSONObject validacaoSucesso = jsonObject.getJSONObject(wichMessage);
             comentarioBody = validacaoSucesso.getString("message_template");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(ExceptionsMessages.ErroAoBuscarArquivo(e));
         } catch (JSONException e) {
-            e.printStackTrace();
+            System.out.println(ExceptionsMessages.ErroAoConverterArquivoJson(e));
         }
 
         return  comentarioBody;
+    }
+
+    public static String GetCustomFieldJson(String customFieldName){
+        String key = null;
+        String dir = System.getProperty("user.dir");
+        try {
+            String json = Files.readString(Paths.get(dir + "\\customFields.json"));
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject customFields = jsonObject.getJSONObject("customfields");
+            JSONObject statusMainframe = customFields.getJSONObject(customFieldName);
+            key = statusMainframe.getString("key");
+
+        } catch (IOException e) {
+            System.out.println(ExceptionsMessages.ErroAoBuscarArquivo(e));
+        } catch (JSONException e) {
+            System.out.println(ExceptionsMessages.ErroAoConverterArquivoJson(e));
+        }
+
+        return key;
     }
 }
