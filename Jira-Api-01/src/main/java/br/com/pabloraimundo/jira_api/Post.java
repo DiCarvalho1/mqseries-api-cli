@@ -35,7 +35,7 @@ public class Post {
 //	    System.out.println(response.getStatusLine().getStatusCode());
 
 		if(response.getStatusLine().getStatusCode() != 201) {
-			System.err.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " Erro ao postar comentário junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao postar comentário junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
 		}
 	
 	}

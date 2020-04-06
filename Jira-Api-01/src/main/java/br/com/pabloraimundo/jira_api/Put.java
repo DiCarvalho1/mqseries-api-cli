@@ -12,7 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 
 public class 	Put {
 	
-	public static void UpdateSubStatus(String url, String user, String password, String issue, SubStatus subStatus) throws Exception {
+	public static void UpdateSubStatus(String url, String user, String password, String issue, String customFieldId, SubStatus subStatus) throws Exception {
 	
 		String userAndPassword = user + ":" + password; 
 		
@@ -29,7 +29,7 @@ public class 	Put {
 	    
 	    String inputJson = "{\n" +
 	        "  \"fields\": {\n" +
-	        "  \"customfield_10400\": {\n" +
+	        "  \"" + customFieldId + "\": {\n" +
 	        "  \"id\": \"" + subStatus.getValue() + "\"\n" +
 	        "} \n" +
 	        "} \n" +
@@ -43,7 +43,7 @@ public class 	Put {
 //	    System.out.println(response.getStatusLine().getStatusCode());
 
 		if(response.getStatusLine().getStatusCode() != 204) {
-			System.err.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + " Erro ao atualizar SubStatus junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao atualizar SubStatus junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
 		}
 	
 	}

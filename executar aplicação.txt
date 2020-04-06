@@ -1,1 +1,1 @@
-java -jar workflow-manager.jar -H "192.168.1.12" -P 1414 -C "DEV.APP.SVRCONN" -Q "QM1" -p "passw0rd" -q "DEV.QUEUE.1" -url "http://192.168.1.12:8080" -user "admin" -password "admin" -subStatusId "customfield_10400"
+java -jar workflow-manager.jar -H "127.0.0.1" -P 1414 -C "DEV.APP.SVRCONN" -Q "QM1" -p "passw0rd" -q "DEV.QUEUE.1" -url "http://127.0.0.1:8080" -user "admin" -password "admin"
