@@ -1,35 +1,56 @@
 {
-    "validacaosucesso": {
-        "return_type": "V",
-        "return_code": "00",
-        "ticket_status": "PROMOVIDO TU",
-        "status_mainframe": "EM EXECUÇÃO",    
-        "message_template": "{ \n \"body\": \"*+PROMOVIDO TU+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EM EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
-    },
-
-    "validacaoerro": {
-        "return_type": "V",
-        "return_code": "[01-99]",
-        "ticket_status": "PROMOVIDO TU",
-        "status_mainframe": "FALHA NA REQUISIÇÃO",    
-        "message_template": "{ \n \"body\": \"*+PROMOVIDO TU+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA REQUISIÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
-    },
-    
-    "execucaosucesso": {
-        "return_type": "E",
-        "return_code": "00",
-        "ticket_status": "PROMOVIDO TU",
-        "status_mainframe": "EXECUTADO",    
-        "message_template": "{ \n \"body\": \"Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EXECUTADO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
-    },
-    
-    "execucaoerro": {
-        "return_type": "E",
-        "return_code": "[01-99]",
-        "ticket_status": "PROMOVIDO TU",
-        "status_mainframe": "FALHA NA EXECUÇÃO",    
-        "message_template": "{ \n \"body\": \"*+PROMOVIDO TU+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
-    }
+    "validacaosucesso": [
+        {   "ticket_status": "PROMOVIDO TU",
+            "status_mainframe": "EM EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EM EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {   "ticket_status": "RE-PROMOVIDO TU",
+            "status_mainframe": "EM EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EM EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {   "ticket_status": "RE-PROMOVIDO TI",
+            "status_mainframe": "EM EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EM EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {   "ticket_status": "RE-PROMOVIDO TI",
+            "status_mainframe": "EM EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EM EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        }
+    ],
+    "validacaoerro": [
+        {   "ticket_status": "APROVADO ANALISTA",
+            "status_mainframe": "FALHA NA REQUISIÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA REQUISIÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {   "ticket_status": "RE-PROMOVIDO TU",
+            "status_mainframe": "FALHA NA REQUISIÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA REQUISIÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        }
+    ],    
+    "execucaosucesso": [
+        {
+            "ticket_status": "PROMOVIDO TU",
+            "status_mainframe": "EXECUTADO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EXECUTADO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {
+            "ticket_status": "RE-PROMOVIDO TU",
+            "status_mainframe": "EXECUTADO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status: *{color:#00875a}SUCESSO{color}* \\n Status Mainframe: *EXECUTADO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        }
+    ],    
+    "execucaoerro": [
+        {
+            "ticket_status": "PROMOVIDO TU",
+            "status_mainframe": "FALHA NA EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        },
+        {
+            "ticket_status": "RE-PROMOVIDO TU",
+            "status_mainframe": "FALHA NA EXECUÇÃO",    
+            "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Status Mainframe: *FALHA NA EXECUÇÃO* \\n Return Message: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
+        }
+    ]
 }
 
 

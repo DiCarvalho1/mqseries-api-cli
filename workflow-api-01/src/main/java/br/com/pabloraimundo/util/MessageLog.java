@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class MessageLog {
 
     public static String Horario(){
-        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " ";
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - ";
     }
 
     public static String UpdateSubStatus(String idOrquestrador){
@@ -29,6 +29,18 @@ public class MessageLog {
 
     public static String UpdateFailedLog(String subStatusUpdateDescription){
         return Horario() + "Não atualizado, " + subStatusUpdateDescription;
+    }
+
+    public static String SearchingForStatus(String status, String array){
+        return Horario() + "Buscando no arquivo JSON \"comentarios\" por ticket_status: " + status + " dentro do array: " + array;
+    }
+
+    public static String SearchingForStatusFailed(){
+        return Horario() + "Nenhum ticket_status encontrado no arquivo JSON para o status atual do ticket";
+    }
+
+    public static String NoCommentsFound(){
+        return Horario() + "Impossível continuar sem algum comentário para adicionar ao Jira, verifique o Status do ticket e os nomes nos ticket_status do arquivo JSON";
     }
 
 }

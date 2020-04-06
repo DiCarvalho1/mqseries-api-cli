@@ -17,7 +17,6 @@ public class Jira_Manager {
 	}
 
 	public void Manager() {
-		
 		String idOrquestrador = SetIdOrquestrador(managerArgsParse.getTicketId());
         
         if (managerArgsParse.getTipoResposta().equalsIgnoreCase("V")){

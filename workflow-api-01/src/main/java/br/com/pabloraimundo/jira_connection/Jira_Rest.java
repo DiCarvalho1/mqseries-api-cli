@@ -39,12 +39,15 @@ public class Jira_Rest {
         if (!subStatusValue.getValue().equalsIgnoreCase(SubStatus.EXECUTADO.getDescription())) {
             try {
                 System.out.println(MessageLog.UpdateSubStatus(idOrquestrador));
-                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, SubStatus.EMEXECUCAO);
+                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.EMEXECUCAO);
             } catch (Exception e) {
                 System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
             }
 
-            String jiraComment = ReplaceJiraComment("validacaosucesso");
+            String jiraComment = ReplaceJiraComment("validacaosucesso", status.getValue());
+            if (jiraComment == null ){
+                return;
+            }
 
             try {
                 System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -85,12 +88,15 @@ public class Jira_Rest {
         if (!subStatusValue.getValue().equalsIgnoreCase(SubStatus.EXECUTADO.getDescription())) {
             try {
                 System.out.println(MessageLog.UpdateSubStatus(idOrquestrador));
-                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, SubStatus.EXECUTADO);
+                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.EXECUTADO);
             } catch (Exception e) {
                 System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
             }
 
-            String jiraComment = ReplaceJiraComment("execucaosucesso");
+            String jiraComment = ReplaceJiraComment("execucaosucesso", status.getValue());
+            if (jiraComment == null ){
+                return;
+            }
 
             try {
                 System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -110,7 +116,7 @@ public class Jira_Rest {
 
     public void ValidacaoFalha(String idOrquestrador){
         try {
-            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, SubStatus.FALHAREQUISICAO);
+            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.FALHAREQUISICAO);
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
         }
@@ -128,7 +134,10 @@ public class Jira_Rest {
                 .findAny()
                 .orElse(null);
 
-        String jiraComment = ReplaceJiraComment("validacaoerro");
+        String jiraComment = ReplaceJiraComment("validacaoerro", status.getValue());
+        if (jiraComment == null ){
+            return;
+        }
 
         try {
             System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -142,7 +151,7 @@ public class Jira_Rest {
 
     public void ExecucaoFalha(String idOrquestrador){
         try {
-            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, SubStatus.FALHAEXECUCAO);
+            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.FALHAEXECUCAO);
         } catch (Exception e) {
             System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
         }
@@ -160,7 +169,10 @@ public class Jira_Rest {
                 .findAny()
                 .orElse(null);
 
-        String jiraComment =  ReplaceJiraComment("execucaoerro");
+        String jiraComment =  ReplaceJiraComment("execucaoerro", status.getValue());
+        if (jiraComment.length() < 0 ){
+            return;
+        }
 
         try {
             System.out.println(MessageLog.PostComment(idOrquestrador));
@@ -172,14 +184,19 @@ public class Jira_Rest {
         System.out.println(MessageLog.UpdateFailedLog(SubStatus.FALHAEXECUCAO.getDescription()));
     }
 
-    private String ReplaceJiraComment(String wichMessage){
-        String jiraComment = GetJson.GetJiraComment(wichMessage);
+    private String ReplaceJiraComment(String array, String status){
+        String jiraComment = GetJson.GetJiraComment(array, status);
 
-        jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getTipoResposta());
-        jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno());
-        jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage());
-        jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().replaceAll("^\\s+", ""));
-        jiraComment = jiraComment.replace("<***instanciaMQ***>", managerArgsParse.getInstancia().replaceAll("^\\s+", ""));
+        if (jiraComment != null) {
+            jiraComment = jiraComment.replace("<***status***>", status);
+            jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getTipoResposta());
+            jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno());
+            jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage());
+            jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().replaceAll("^\\s+", ""));
+            jiraComment = jiraComment.replace("<***instanciaMQ***>", managerArgsParse.getInstancia().replaceAll("^\\s+", ""));
+        } else {
+            System.out.println(MessageLog.NoCommentsFound());
+        }
 
         return jiraComment;
     }
