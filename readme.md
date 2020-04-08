@@ -1,7 +1,6 @@
 ﻿**README - Workflow-Manager**
 
-**1. Documentation**
-**1.1 Use Case Diagram**
+**1. Use Case Diagram**
 ![Caso de uso](https://i.imgur.com/IFczUii.png)
 
 **2. Demonstration of how to run the application**
