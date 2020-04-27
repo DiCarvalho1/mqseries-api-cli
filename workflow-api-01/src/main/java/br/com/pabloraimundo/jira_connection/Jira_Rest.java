@@ -61,7 +61,7 @@ public class Jira_Rest {
         }
         else {
             System.out.println(MessageLog.UpdateFailed(idOrquestrador));
-            System.out.println("Não atualizado. Impossível atualizar para EM EXECUÇÃO, SubStatus se encontra EXECUTADO");
+            System.out.println(MessageLog.Horario() + "Não atualizado. Impossível atualizar para EM EXECUÇÃO, SubStatus se encontra EXECUTADO");
         }
     }
 
@@ -110,7 +110,7 @@ public class Jira_Rest {
         }
         else {
             System.out.println(MessageLog.UpdateFailed(idOrquestrador));
-            System.out.println("Status atual " + subStatusValue.getValue() + " Não atualizado, SubStatus já está EXECUTADO");
+            System.out.println(MessageLog.Horario() + "Status atual " + subStatusValue.getValue() + " Não atualizado, SubStatus já está EXECUTADO");
         }
     }
 

@@ -45,7 +45,7 @@ public class Jira_Manager {
         
     }
     
-    private static String SetIdOrquestrador(String idOrquestrador) {
+    public static String SetIdOrquestrador(String idOrquestrador) {
     	int OrquestradorNumero = 0;
 
     	try {
