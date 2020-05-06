@@ -1,5 +1,6 @@
 package br.com.pabloraimundo.jira_api;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -12,7 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 
 public class Post {
 	
-	public static void PostComment(String url, String user, String password, String issue, String inputJson) throws Exception {
+	public static Integer PostComment(String url, String user, String password, String issue, String inputJson) throws Exception {
 		
 		String userAndPassword = user + ":" + password;
 		
@@ -31,12 +32,37 @@ public class Post {
 	    httpPost.setEntity(stringEntity);
 	    	
 	    HttpResponse response = httpclient.execute(httpPost);
-	
-//	    System.out.println(response.getStatusLine().getStatusCode());
 
-		if(response.getStatusLine().getStatusCode() != 201) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao postar comentário junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
-		}
-	
+		return  response.getStatusLine().getStatusCode();
+	}
+
+	public static Integer StatusTransition(String url, String user, String password, String issue, String transitionId) throws IOException {
+
+		String userAndPassword = user + ":" + password;
+
+		String authStr = Base64.getEncoder().encodeToString(userAndPassword.getBytes());
+
+		String postEndpoint = url + "/rest/api/2/issue/" + issue + "/transitions";
+
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+
+		HttpPost httpPost = new HttpPost(postEndpoint);
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-type", "application/json");
+		httpPost.setHeader("Authorization", "Basic " + authStr);
+
+		String inputJson = "{\n" +
+				"\"transition\": {\n" +
+					"\"id\": \"" + transitionId + "\"\n" +
+					"}\n" +
+				"}";
+
+		StringEntity stringEntity = new StringEntity(inputJson, "UTF-8");
+		httpPost.setEntity(stringEntity);
+
+		HttpResponse response = httpclient.execute(httpPost);
+
+		return response.getStatusLine().getStatusCode();
+
 	}
 }

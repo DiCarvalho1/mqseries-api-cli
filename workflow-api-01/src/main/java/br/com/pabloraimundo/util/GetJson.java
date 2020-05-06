@@ -49,7 +49,7 @@ public class GetJson {
         String comentarioBody = null;
         String dir = System.getProperty("user.dir");
         try {
-            String comentarios = Files.readString(Paths.get(dir + "\\comentarios.json"));
+            String comentarios = Files.readString(Paths.get(dir + "\\ticket_comments.json"));
             JSONObject jsonObject = new JSONObject(comentarios);
             JSONArray jsonArray = jsonObject.getJSONArray(array);
 
@@ -83,11 +83,54 @@ public class GetJson {
         String key = null;
         String dir = System.getProperty("user.dir");
         try {
-            String json = Files.readString(Paths.get(dir + "\\customFields.json"));
+            String json = Files.readString(Paths.get(dir + "\\ticket_custom_fields.json"));
             JSONObject jsonObject = new JSONObject(json);
             JSONObject customFields = jsonObject.getJSONObject("customfields");
             JSONObject statusMainframe = customFields.getJSONObject(customFieldName);
             key = statusMainframe.getString("key");
+
+        } catch (IOException e) {
+            System.out.println(ExceptionsMessages.ErroAoBuscarArquivo(e));
+        } catch (JSONException e) {
+            System.out.println(ExceptionsMessages.ErroAoConverterArquivoJson(e));
+        }
+
+        return key;
+    }
+
+    public static String GetCustomFieldNameByJson(String customFieldName){
+        String key = null;
+        String dir = System.getProperty("user.dir");
+        try {
+            String json = Files.readString(Paths.get(dir + "\\ticket_custom_fields.json"));
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject customFields = jsonObject.getJSONObject("customfields");
+            JSONObject statusMainframe = customFields.getJSONObject(customFieldName);
+            key = statusMainframe.getString("name");
+
+        } catch (IOException e) {
+            System.out.println(ExceptionsMessages.ErroAoBuscarArquivo(e));
+        } catch (JSONException e) {
+            System.out.println(ExceptionsMessages.ErroAoConverterArquivoJson(e));
+        }
+
+        return key;
+    }
+
+    public static String GetStatusTransition(String currentStatus, Boolean target){
+        String key = null;
+        String dir = System.getProperty("user.dir");
+        try {
+            String json = Files.readString(Paths.get(dir + "\\ticket_workflow_config.json"));
+            JSONObject jsonObject = new JSONObject(json);
+            JSONObject statusTicket = jsonObject.getJSONObject(currentStatus);
+            if (target){
+                JSONObject target_successed = statusTicket.getJSONObject("target_successed");
+                key = target_successed.getString("jira_transition_id");
+            } else {
+                JSONObject target_successed = statusTicket.getJSONObject("target_failed");
+                key = target_successed.getString("jira_transition_id");
+            }
 
         } catch (IOException e) {
             System.out.println(ExceptionsMessages.ErroAoBuscarArquivo(e));

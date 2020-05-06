@@ -1,30 +1,45 @@
 package br.com.pabloraimundo.util;
 
-import br.com.pabloraimundo.jira_api.SubStatus;
+import br.com.pabloraimundo.jira_connection.Jira_Rest;
+import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
 
+import java.lang.reflect.Method;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class MessageLog {
 
+    public static void SysOut(String alert){
+        System.out.println(alert);
+    }
+
     public static String Horario(){
         return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - ";
     }
 
-    public static String UpdateSubStatus(String idOrquestrador){
-        return Horario() + "ticket " + idOrquestrador + " atualizado";
+    public static String UpdateStatus(ManagerArgsParse managerArgsParse , String idOrquestrador){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Transição de status realizada no Ticket: " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + ")";
     }
 
-    public static String PostComment(String idOrquestrador){
-        return Horario() + "Inserindo comentário no ticket " + idOrquestrador;
+    public static String UpdateStatusFailed(ManagerArgsParse managerArgsParse, String idOrquestrador, String statusCode){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Erro durante transição de status no Ticket: " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + "). Status Code: " + statusCode;
     }
 
-    public static String UpdateFailed(String idOrquestrador){
-        return Horario() + "Falha na atualização";
+    public static String UpdateStatusWithFailure(ManagerArgsParse managerArgsParse, String idOrquestrador){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Mensagem de erro vindo da fila MQ, transição de status realizada no Ticket: " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + ")";
     }
 
-    public static String UpdateSucessLog(String currentSubStatusValue, String subStatusUpdateDescription){
-        return Horario() + "SubStatus atualizado De " + currentSubStatusValue + " para " + subStatusUpdateDescription;
+    public static String PostCommentSucceded(ManagerArgsParse managerArgsParse, String idOrquestrador){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Comentário inserido no ticket " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + ")";
+    }
+
+    public static String PostCommentFailed(ManagerArgsParse managerArgsParse, String idOrquestrador, String statusCode){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Erro ao postar comentário junto à api Jira. Ticket " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + "). Status code: " + statusCode;
     }
 
     public static String UpdateFailedLog(String subStatusUpdateDescription){
@@ -41,6 +56,15 @@ public class MessageLog {
 
     public static String NoCommentsFound(){
         return Horario() + "Impossível continuar sem algum comentário para adicionar ao Jira, verifique o Status do ticket e os nomes nos ticket_status do arquivo JSON";
+    }
+
+    public static String ListaDeComponentesUpdated(ManagerArgsParse managerArgsParse, String idOrquestrador){
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        return Horario() + "Lista de componentes atualizada no Ticket: " + jira_rest.GetJiraIssueName(idOrquestrador) + " (" + idOrquestrador + ")";
+    }
+
+    public static String ListaDeComponentesUpdateFailed(String updateStatusCode){
+        return Horario() + "Erro ao atualizar lista de componentes junto à api Jira. Status Code: " + updateStatusCode;
     }
 
 }

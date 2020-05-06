@@ -21,11 +21,10 @@ public class Manager {
 		List<String> message = null;
 
 		try {
-			System.out.println(MessageLog.Horario() + "Buscando mensagens na fila");
+			System.out.println(MessageLog.Horario() + "Buscando mensagens na fila MQ");
 			message = App.GetAllMessagesFromMq(managerArgsParse.cliArgsParser);
-			System.out.println(MessageLog.Horario() + "Busca concluída ");
 		} catch (Exception e) {
-			System.out.println(MessageLog.Horario() + "Erro ao receber mensagens da fila");
+			System.out.println(MessageLog.Horario() + "Erro ao receber mensagens da fila MQ");
 		}
 
 		if (message.size() <= 0){
@@ -47,7 +46,7 @@ public class Manager {
 
 				System.out.println(MessageLog.Horario() +  "Mensagem recebida: " + string);
 
-				if (string.substring(0, 8).equalsIgnoreCase("LISTCOMP")){
+				if (string.substring(0, 7).equalsIgnoreCase("QPCCHGM")){
 					Lista_De_Componentes lista_de_componentes = new Lista_De_Componentes(managerArgsParse);
 					lista_de_componentes.Update(string);
 					if (voltasNoLoop == message.size()) {
@@ -62,8 +61,9 @@ public class Manager {
 					String changemanPackage = string.substring(18, 28);
 					String ticketUsername = string.substring(28, 36);
 					String ticketId = string.substring(36, 48);
-					String siteMaquina = string.substring(48, 58);
-					String instancia = string.substring(58, 68);
+					String reservedPositions = string.substring(48,52);
+					String siteMaquina = string.substring(52, 60);
+					String instancia = string.substring(60, 68);
 					String returMessage = string.substring(68);
 					String subStatusId = GetJson.GetCustomFieldJson("status_mainframe");
 

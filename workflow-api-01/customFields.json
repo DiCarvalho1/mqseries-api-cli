@@ -1,6 +1,6 @@
 {    
     "customfields": {
-        "status_mainframe": {"name": "Sub-status",  "key": "customfield_10400"}, 
+        "status_mainframe": {"name": "Status Mainframe",  "key": "customfield_10400"}, 
         "site_tu": {"name": "Sites (TU)",  "key": "customfield_10400"}, 
         "site_ti": {"name": "Sites (TI)",  "key": "customfield_10400"}, 
         "site_prod": {"name": "Sites (PROD)",  "key": "customfield_10400"}, 

@@ -5,7 +5,10 @@ import br.com.pabloraimundo.util.GetJson;
 import br.com.pabloraimundo.util.MessageLog;
 import br.com.pabloraimundo.util.ExceptionsMessages;
 import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
+import org.codehaus.jettison.json.JSONException;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Jira_Rest {
@@ -17,171 +20,147 @@ public class Jira_Rest {
     }
 
     public void ValidacaoSucesso(String idOrquestrador) {
+        br.com.pabloraimundo.jira_api.Fields status = GetStatusTicket(idOrquestrador);
 
-        List<Fields> customFieldValue = null;
+        String jiraComment = ReplaceJiraComment("validacaosucesso", status.getValue());
+        if (jiraComment == null ){
+            MessageLog.SysOut(ExceptionsMessages.ErroAoSubstituirCamposNoArquivoComentariosJson());
+            return;
+        }
+
+        Integer commentStatusCode = 0;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+            commentStatusCode = Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
         } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+            MessageLog.SysOut(ExceptionsMessages.ErroAoPostarUmcomentario(e));
         }
 
-        br.com.pabloraimundo.jira_api.Fields subStatusValue = customFieldValue.stream()
-                .filter(x -> "SubStatus".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
-
-        br.com.pabloraimundo.jira_api.Fields status = customFieldValue.stream()
-                .filter(x -> "Status".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
-
-        if (!subStatusValue.getValue().equalsIgnoreCase(SubStatus.EXECUTADO.getDescription())) {
-            try {
-                System.out.println(MessageLog.UpdateSubStatus(idOrquestrador));
-                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.EMEXECUCAO);
-            } catch (Exception e) {
-                System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
-            }
-
-            String jiraComment = ReplaceJiraComment("validacaosucesso", status.getValue());
-            if (jiraComment == null ){
-                return;
-            }
-
-            try {
-                System.out.println(MessageLog.PostComment(idOrquestrador));
-                Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
-            } catch (Exception e) {
-                System.out.println(ExceptionsMessages.ErroAoPostarUmcomentario(e));
-            }
-
-            System.out.println(MessageLog.UpdateSucessLog(subStatusValue.getValue(), SubStatus.EMEXECUCAO.getDescription()));
-
-        }
-        else {
-            System.out.println(MessageLog.UpdateFailed(idOrquestrador));
-            System.out.println(MessageLog.Horario() + "Não atualizado. Impossível atualizar para EM EXECUÇÃO, SubStatus se encontra EXECUTADO");
+        if (commentStatusCode == 201){
+            MessageLog.SysOut(MessageLog.PostCommentSucceded(managerArgsParse, idOrquestrador));
+        } else {
+            MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
         }
     }
 
-    public void ExecucaoSucesso(String idOrquestrador) {
 
-        List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
+    public void ExecucaoSucesso(String idOrquestrador) {
+        br.com.pabloraimundo.jira_api.Fields status = GetStatusTicket(idOrquestrador);
+
+        Integer transitionStatusCode = 0;
+        Integer commentStatusCode = 0;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+            String transitionId = GetJson.GetStatusTransition(status.getValue(), true);
+            transitionStatusCode = Post.StatusTransition(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, transitionId);
         } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+            MessageLog.SysOut(ExceptionsMessages.ErroAoAtualizarStatus(e));
         }
 
-        br.com.pabloraimundo.jira_api.Fields subStatusValue = customFieldValue.stream()
-                .filter(x -> "SubStatus".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
-
-        br.com.pabloraimundo.jira_api.Fields status = customFieldValue.stream()
-                .filter(x -> "Status".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
-
-        if (!subStatusValue.getValue().equalsIgnoreCase(SubStatus.EXECUTADO.getDescription())) {
-            try {
-                System.out.println(MessageLog.UpdateSubStatus(idOrquestrador));
-                Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.EXECUTADO);
-            } catch (Exception e) {
-                System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
-            }
+        if (transitionStatusCode == 204){
+            MessageLog.SysOut(MessageLog.UpdateStatus(managerArgsParse, idOrquestrador));
 
             String jiraComment = ReplaceJiraComment("execucaosucesso", status.getValue());
             if (jiraComment == null ){
+                MessageLog.SysOut(ExceptionsMessages.ErroAoSubstituirCamposNoArquivoComentariosJson());
                 return;
             }
 
             try {
-                System.out.println(MessageLog.PostComment(idOrquestrador));
-                Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
+                commentStatusCode = Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
             } catch (Exception e) {
-                System.out.println(ExceptionsMessages.ErroAoPostarUmcomentario(e));
+                MessageLog.SysOut(ExceptionsMessages.ErroAoPostarUmcomentario(e));
             }
 
-            System.out.println(MessageLog.UpdateSucessLog(subStatusValue.getValue(), SubStatus.EXECUTADO.getDescription()));
+            if (commentStatusCode == 201){
+                MessageLog.SysOut(MessageLog.PostCommentSucceded(managerArgsParse, idOrquestrador));
+            } else {
+                MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
+            }
 
-        }
-        else {
-            System.out.println(MessageLog.UpdateFailed(idOrquestrador));
-            System.out.println(MessageLog.Horario() + "Status atual " + subStatusValue.getValue() + " Não atualizado, SubStatus já está EXECUTADO");
+        } else {
+            MessageLog.SysOut(MessageLog.UpdateStatusFailed(managerArgsParse, idOrquestrador, transitionStatusCode.toString()));
         }
     }
 
     public void ValidacaoFalha(String idOrquestrador){
-        try {
-            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.FALHAREQUISICAO);
-        } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
-        }
+        br.com.pabloraimundo.jira_api.Fields status = GetStatusTicket(idOrquestrador);
 
-        List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
+        Integer transitionStatusCode = 0;
+        Integer commentStatusCode = 0;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+            String transitionId = GetJson.GetStatusTransition(status.getValue(), false);
+            transitionStatusCode = Post.StatusTransition(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, transitionId);
         } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+            MessageLog.SysOut(ExceptionsMessages.ErroAoAtualizarStatus(e));
         }
 
-        br.com.pabloraimundo.jira_api.Fields status = customFieldValue.stream()
-                .filter(x -> "Status".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
+        if (transitionStatusCode == 204) {
+            MessageLog.SysOut(MessageLog.UpdateStatusWithFailure(managerArgsParse, idOrquestrador));
 
-        String jiraComment = ReplaceJiraComment("validacaoerro", status.getValue());
-        if (jiraComment == null ){
-            return;
+            String jiraComment = ReplaceJiraComment("validacaoerro", status.getValue());
+            if (jiraComment == null) {
+                MessageLog.SysOut(ExceptionsMessages.ErroAoSubstituirCamposNoArquivoComentariosJson());
+                return;
+            }
+
+            try {
+                commentStatusCode = Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
+            } catch (Exception e) {
+                MessageLog.SysOut(ExceptionsMessages.ErroAoPostarUmcomentario(e));
+            }
+
+            if (commentStatusCode == 201) {
+                MessageLog.SysOut(MessageLog.PostCommentSucceded(managerArgsParse, idOrquestrador));
+            } else {
+                MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
+            }
+
+            MessageLog.SysOut(MessageLog.UpdateFailedLog(SubStatus.FALHAREQUISICAO.getDescription()));
+        } else {
+            MessageLog.SysOut(MessageLog.UpdateStatusFailed(managerArgsParse, idOrquestrador, transitionStatusCode.toString()));
         }
-
-        try {
-            System.out.println(MessageLog.PostComment(idOrquestrador));
-            Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
-        } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoPostarUmcomentario(e));
-        }
-
-        System.out.println(MessageLog.UpdateFailedLog(SubStatus.FALHAREQUISICAO.getDescription()));
     }
 
     public void ExecucaoFalha(String idOrquestrador){
-        try {
-            Put.UpdateSubStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId(), SubStatus.FALHAEXECUCAO);
-        } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoAtualizarSubStatus(e));
-        }
+        br.com.pabloraimundo.jira_api.Fields status = GetStatusTicket(idOrquestrador);
 
-        List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
+        Integer commentStatusCode = 0;
+        Integer transitionStatusCode = 0;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+            String transitionId = GetJson.GetStatusTransition(status.getValue(), false);
+            transitionStatusCode = Post.StatusTransition(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, transitionId);
         } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+            MessageLog.SysOut(ExceptionsMessages.ErroAoAtualizarStatus(e));
         }
 
-        br.com.pabloraimundo.jira_api.Fields status = customFieldValue.stream()
-                .filter(x -> "Status".equalsIgnoreCase(x.getName()))
-                .findAny()
-                .orElse(null);
+        if (transitionStatusCode == 204) {
+            MessageLog.SysOut(MessageLog.UpdateStatusWithFailure(managerArgsParse, idOrquestrador));
 
-        String jiraComment =  ReplaceJiraComment("execucaoerro", status.getValue());
-        if (jiraComment.length() < 0 ){
-            return;
+            String jiraComment = ReplaceJiraComment("execucaoerro", status.getValue());
+            if (jiraComment.length() < 0) {
+                MessageLog.SysOut(ExceptionsMessages.ErroAoSubstituirCamposNoArquivoComentariosJson());
+                return;
+            }
+
+            try {
+                commentStatusCode = Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
+            } catch (Exception e) {
+                MessageLog.SysOut(ExceptionsMessages.ErroAoPostarUmcomentario(e));
+            }
+
+            if (commentStatusCode == 201) {
+                MessageLog.SysOut(MessageLog.PostCommentSucceded(managerArgsParse, idOrquestrador));
+            } else {
+                MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
+            }
+
+            MessageLog.SysOut(MessageLog.UpdateFailedLog(SubStatus.FALHAEXECUCAO.getDescription()));
+        } else {
+            MessageLog.SysOut(MessageLog.UpdateStatusFailed(managerArgsParse, idOrquestrador, transitionStatusCode.toString()));
         }
-
-        try {
-            System.out.println(MessageLog.PostComment(idOrquestrador));
-            Post.PostComment(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, jiraComment);
-        } catch (Exception e) {
-            System.out.println(ExceptionsMessages.ErroAoPostarUmcomentario(e));
-        }
-
-        System.out.println(MessageLog.UpdateFailedLog(SubStatus.FALHAEXECUCAO.getDescription()));
     }
 
     private String ReplaceJiraComment(String array, String status){
@@ -189,15 +168,44 @@ public class Jira_Rest {
 
         if (jiraComment != null) {
             jiraComment = jiraComment.replace("<***status***>", status);
-            jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getTipoResposta());
-            jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno());
-            jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage());
-            jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().replaceAll("^\\s+", ""));
-            jiraComment = jiraComment.replace("<***instanciaMQ***>", managerArgsParse.getInstancia().replaceAll("^\\s+", ""));
+            jiraComment = jiraComment.replace("<***returntype***>", managerArgsParse.getTipoResposta().trim());
+            jiraComment = jiraComment.replace("<***returncode***>", managerArgsParse.getCodigoRetorno().trim());
+            jiraComment = jiraComment.replace("<***mensagemMQ***>", managerArgsParse.getReturnMessage().trim());
+            jiraComment = jiraComment.replace("<***siteMQ***>", managerArgsParse.getSiteMaquina().trim());
+            jiraComment = jiraComment.replace("<***instanciaMQ***>", managerArgsParse.getInstancia().trim());
         } else {
-            System.out.println(MessageLog.NoCommentsFound());
+            MessageLog.SysOut(MessageLog.NoCommentsFound());
         }
 
         return jiraComment;
+    }
+
+    public String GetJiraIssueName(String idOrquestrador){
+        String issueName = "";
+
+        try {
+            issueName = Get.GetIssueName(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador);
+        } catch (JSONException e) {
+            MessageLog.SysOut(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+        }
+
+        return issueName;
+    }
+
+    public Fields GetStatusTicket(String idOrquestrador){
+        List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
+
+        try {
+            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+        } catch (Exception e) {
+            MessageLog.SysOut(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
+        }
+
+        br.com.pabloraimundo.jira_api.Fields status = customFieldValue.stream()
+                .filter(x -> "Status".equalsIgnoreCase(x.getName()))
+                .findAny()
+                .orElse(null);
+
+        return  status;
     }
 }

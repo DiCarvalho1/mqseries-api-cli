@@ -7,6 +7,8 @@ import br.com.pabloraimundo.util.MessageLog;
 import br.com.pabloraimundo.workflow_manager.Jira_Manager;
 import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class Lista_De_Componentes {
         String customFieldName = GetJson.GetCustomFieldJson("lista_de_componentes");
 
         String json = "{\n" +
-                "\"fields\" : { \"" + customFieldName + "\" : \" || NOME || TIPO || STATUS || LINGUAGEM || PROC || RACF || FILLER || \\n";
+                "\"fields\" : { \"" + customFieldName + "\" : \" || NOME || TIPO || STATUS || LINGUAGEM || PROC || CHAVE || FILLER || \\n";
 
         String jsonComponentes = "";
 
@@ -54,9 +56,19 @@ public class Lista_De_Componentes {
 
         String idOrquestrador = Jira_Manager.SetIdOrquestrador(message.substring(43,48));
 
-        Put.UpdateListaDeComponentes(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, json);
+        Integer updateStatusCode = 0;
 
-        System.out.println(MessageLog.Horario() + "Lista de componentes atualizada no orquestrador: " + idOrquestrador);
+        updateStatusCode = Put.UpdateListaDeComponentes(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, json);
+
+        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
+        br.com.pabloraimundo.jira_api.Fields statusTicket = jira_rest.GetStatusTicket(idOrquestrador);
+
+        if(updateStatusCode == 204) {
+            MessageLog.SysOut(MessageLog.ListaDeComponentesUpdated(managerArgsParse, idOrquestrador));
+        } else {
+            MessageLog.SysOut(MessageLog.ListaDeComponentesUpdateFailed(updateStatusCode.toString()));
+        }
+
     }
 
     private List<String> StringToList(String message){

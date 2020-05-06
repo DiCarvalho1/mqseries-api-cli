@@ -3,6 +3,7 @@ package br.com.pabloraimundo.jira_api;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.time.LocalTime;
@@ -28,7 +29,7 @@ public class Get {
 		ClientResponse resp = webResource.accept("application/json").header("Authorization", "Basic " + authStr).get(ClientResponse.class);
 
 		if(resp.getStatus() != 200) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao conectar à api Jira. Possivelmente o número da Issue informada está incorreto. Status code: " + resp.getStatus());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar à api Jira. Possivelmente o número da Issue informada está incorreto. Status code: " + resp.getStatus());
 		}
 		
 		String output = resp.getEntity(String.class);
@@ -48,5 +49,28 @@ public class Get {
 		
 		return jiraValues;
 	}
+
+	public static String GetIssueName(String url, String user, String password, String issue) throws JSONException {
+		String issueName = "";
+
+		String userAndPassword = user + ":" + password;
+
+		String authStr = Base64.getEncoder().encodeToString(userAndPassword.getBytes());
+		Client restClient = Client.create();
+		WebResource webResource = restClient.resource(url + "/rest/api/latest/issue/" + issue);
+		ClientResponse resp = webResource.accept("application/json").header("Authorization", "Basic " + authStr).get(ClientResponse.class);
+
+		if(resp.getStatus() != 200) {
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar à api Jira. Possivelmente o número da Issue informada está incorreto. Status code: " + resp.getStatus());
+		}
+
+		String output = resp.getEntity(String.class);
+
+		JSONObject jsonObject = new JSONObject(output);
+		issueName = jsonObject.getString("key");
+
+		return  issueName;
+	}
+
 
 }

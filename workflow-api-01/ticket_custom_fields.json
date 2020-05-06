@@ -1,0 +1,11 @@
+{    
+    "customfields": {
+        "status_mainframe": {"name": "Status Mainframe",  "key": "customfield_10400"}, 
+        "pacote_changeman": {"name": "Pacote Changeman",  "key": ""},
+        "lista_de_componentes": {"name": "Lista de Componentes", "key": "customfield_10700"}
+    }
+}                   
+
+
+
+Key: <issue-key> - Id: <issue-id> 

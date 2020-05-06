@@ -48,13 +48,17 @@ public class 	Put {
 
 //	    System.out.println(response.getStatusLine().getStatusCode());
 
+		if(response.getStatusLine().getStatusCode() == 400){
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode() + ". Verifique se o campo desejado existe e está visível");
+		}
+
 		if(response.getStatusLine().getStatusCode() != 204) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao atualizar SubStatus junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
 		}
 	
 	}
 
-	public static void UpdateListaDeComponentes(String url, String user, String password, String issue, String inputJson){
+	public static Integer UpdateListaDeComponentes(String url, String user, String password, String issue, String inputJson){
 
 		String userAndPassword = user + ":" + password;
 
@@ -80,11 +84,7 @@ public class 	Put {
 			System.out.println("Erro ao executar chamada rest: " + e);
 		}
 
-//	    System.out.println(response.getStatusLine().getStatusCode());
-
-		if(response.getStatusLine().getStatusCode() != 204) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " Erro ao atualizar lista de componentes junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
-		}
+		return response.getStatusLine().getStatusCode();
 	}
 	
 }

@@ -1,0 +1,55 @@
+{
+    "EM INSTALACAO TU" : {
+        "target_successed": {
+            "jira_status_name": "PROMOTIVO TU", 
+            "jira_status_id": 120
+        },  
+        "target_failed": {
+            "jira_status_name": "FALHA INSTALACAO TU", 
+            "jira_status_id": 121
+        }
+    },
+    "EM INSTALACAO TI" : {  
+        "target_successed": {
+            "jira_status_name": "PROMOTIVO TI", 
+            "jira_status_id": 120
+        },  
+        "target_failed": {
+            "jira_status_name": "FALHA INSTALACAO TI", 
+            "jira_status_id": 121
+        }
+    },
+    "EM INSTALACAO PRODUCAO" : {  
+        "target_successed": {
+            "jira_status_name": "INSTALADO PRODUCAO", 
+            "jira_status_id": 120
+        },  
+        "target_failed": {
+            "jira_status_name": "FALHA NA INSTALACAO", 
+            "jira_status_id": 121
+        }
+    },
+    "CRIADO" : {  
+        "target_successed": {
+            "jira_status_name": "INSTALADO PRODUCAO", 
+            "jira_status_id": 251
+        },  
+        "target_failed": {
+            "jira_status_name": "FALHA NA INSTALACAO", 
+            "jira_status_id": 121
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
