@@ -35,7 +35,7 @@ public class Lista_De_Componentes {
         String customFieldName = GetJson.GetCustomFieldJson("lista_de_componentes");
 
         String json = "{\n" +
-                "\"fields\" : { \"" + customFieldName + "\" : \" || NOME || TIPO || STATUS || LINGUAGEM || PROC || CHAVE || FILLER || \\n";
+                "\"fields\" : { \"" + customFieldName + "\" : \" {panel:title=Lista de Componentes} || NOME || TIPO || STATUS || LINGUAGEM || PROC || CHAVE || FILLER || \\n";
 
         String jsonComponentes = "";
 
@@ -52,7 +52,7 @@ public class Lista_De_Componentes {
             jsonComponentes = jsonComponentes + ListaDeComponentesConcatenada(componenteName, tipo, status, linguagem, proc, chave, filler) + "\\n ";
         }
 
-        json = json + jsonComponentes + "\" } }";
+        json = json + jsonComponentes + "\" {panel} } }";
 
         String idOrquestrador = Jira_Manager.SetIdOrquestrador(message.substring(43,48));
 

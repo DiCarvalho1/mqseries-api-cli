@@ -117,7 +117,6 @@ public class Jira_Rest {
                 MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
             }
 
-            MessageLog.SysOut(MessageLog.UpdateFailedLog(SubStatus.FALHAREQUISICAO.getDescription()));
         } else {
             MessageLog.SysOut(MessageLog.UpdateStatusFailed(managerArgsParse, idOrquestrador, transitionStatusCode.toString()));
         }
@@ -157,7 +156,6 @@ public class Jira_Rest {
                 MessageLog.SysOut(MessageLog.PostCommentFailed(managerArgsParse, idOrquestrador, commentStatusCode.toString()));
             }
 
-            MessageLog.SysOut(MessageLog.UpdateFailedLog(SubStatus.FALHAEXECUCAO.getDescription()));
         } else {
             MessageLog.SysOut(MessageLog.UpdateStatusFailed(managerArgsParse, idOrquestrador, transitionStatusCode.toString()));
         }
@@ -196,7 +194,7 @@ public class Jira_Rest {
         List<br.com.pabloraimundo.jira_api.Fields> customFieldValue = null;
 
         try {
-            customFieldValue = Get.GetJiraValues(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, managerArgsParse.getSubStatusId());
+            customFieldValue = Get.GetIssueStatus(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador);
         } catch (Exception e) {
             MessageLog.SysOut(ExceptionsMessages.ErroAoReceberValorDoCustomField(e));
         }

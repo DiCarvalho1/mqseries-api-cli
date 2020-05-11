@@ -2,8 +2,6 @@ package br.com.pabloraimundo.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -12,7 +10,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetJson {
@@ -49,7 +46,7 @@ public class GetJson {
         String comentarioBody = null;
         String dir = System.getProperty("user.dir");
         try {
-            String comentarios = Files.readString(Paths.get(dir + "\\ticket_comments.json"));
+            String comentarios = Files.readString(Paths.get(dir + "\\ticket-comments.json"));
             JSONObject jsonObject = new JSONObject(comentarios);
             JSONArray jsonArray = jsonObject.getJSONArray(array);
 
@@ -83,7 +80,7 @@ public class GetJson {
         String key = null;
         String dir = System.getProperty("user.dir");
         try {
-            String json = Files.readString(Paths.get(dir + "\\ticket_custom_fields.json"));
+            String json = Files.readString(Paths.get(dir + "\\ticket-custom-fields.json"));
             JSONObject jsonObject = new JSONObject(json);
             JSONObject customFields = jsonObject.getJSONObject("customfields");
             JSONObject statusMainframe = customFields.getJSONObject(customFieldName);
@@ -102,7 +99,7 @@ public class GetJson {
         String key = null;
         String dir = System.getProperty("user.dir");
         try {
-            String json = Files.readString(Paths.get(dir + "\\ticket_custom_fields.json"));
+            String json = Files.readString(Paths.get(dir + "\\ticket-custom-fields.json"));
             JSONObject jsonObject = new JSONObject(json);
             JSONObject customFields = jsonObject.getJSONObject("customfields");
             JSONObject statusMainframe = customFields.getJSONObject(customFieldName);
@@ -121,7 +118,7 @@ public class GetJson {
         String key = null;
         String dir = System.getProperty("user.dir");
         try {
-            String json = Files.readString(Paths.get(dir + "\\ticket_workflow_config.json"));
+            String json = Files.readString(Paths.get(dir + "\\ticket-workflow-config.json"));
             JSONObject jsonObject = new JSONObject(json);
             JSONObject statusTicket = jsonObject.getJSONObject(currentStatus);
             if (target){

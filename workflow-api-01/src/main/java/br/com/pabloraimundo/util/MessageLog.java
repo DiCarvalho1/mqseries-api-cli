@@ -3,7 +3,6 @@ package br.com.pabloraimundo.util;
 import br.com.pabloraimundo.jira_connection.Jira_Rest;
 import br.com.pabloraimundo.workflow_manager.ManagerArgsParse;
 
-import java.lang.reflect.Method;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 

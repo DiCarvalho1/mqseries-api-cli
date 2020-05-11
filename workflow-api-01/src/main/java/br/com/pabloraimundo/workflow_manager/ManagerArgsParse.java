@@ -28,7 +28,6 @@ public class ManagerArgsParse {
     String instancia;
 
 	String returnMessage;
-	String subStatusId;
     
 //  Jira arg Properties...
     String url; 
@@ -287,15 +286,6 @@ public class ManagerArgsParse {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getSubStatusId() {
-		return subStatusId;
-	}
-
-
-	public void setSubStatusId(String subStatusId) {
-		this.subStatusId = subStatusId;
 	}
 	
 

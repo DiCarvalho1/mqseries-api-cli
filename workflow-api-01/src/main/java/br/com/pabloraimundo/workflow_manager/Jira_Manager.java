@@ -1,10 +1,5 @@
 package br.com.pabloraimundo.workflow_manager;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import br.com.pabloraimundo.jira_api.*;
 import br.com.pabloraimundo.jira_connection.Jira_Rest;
 
 public class Jira_Manager {
