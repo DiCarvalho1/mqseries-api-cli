@@ -18,7 +18,7 @@ public class Get {
 		System.out.println("Api Jira");
 	}
 	
-	public static List<Fields> GetJiraValues(String url, String user, String password, String issue, String customFieldName) throws Exception {
+	public static List<Fields> GetIssueStatus(String url, String user, String password, String issue) throws Exception {
 		List<Fields> jiraValues = new ArrayList<Fields>();
 		
 		String userAndPassword = user + ":" + password;
@@ -36,11 +36,6 @@ public class Get {
 		
 		JSONObject jsonObject = new JSONObject(output);
 		JSONObject fields = jsonObject.getJSONObject("fields");
-		
-		JSONObject customField = fields.getJSONObject(customFieldName);
-		String customFieldValue = customField.getString("value");
-		
-		jiraValues.add(new Fields("SubStatus", customFieldValue));
 		
 		JSONObject status = fields.getJSONObject("status");
 		String statusValue = status.getString("name");

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jira-api-jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jira-api-jar.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

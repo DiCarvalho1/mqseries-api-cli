@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="mqseries-api-cli-master:jar">
+    <output-path>$PROJECT_DIR$/../bitbucket_brad_tu/devsecops-esteira-mainframe/workflow-manager-api/lib</output-path>
+    <root id="root">
+      <element id="archive" name="mqseries-api-jar.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

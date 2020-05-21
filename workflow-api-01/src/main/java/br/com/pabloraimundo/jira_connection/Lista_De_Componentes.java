@@ -35,7 +35,7 @@ public class Lista_De_Componentes {
         String customFieldName = GetJson.GetCustomFieldJson("lista_de_componentes");
 
         String json = "{\n" +
-                "\"fields\" : { \"" + customFieldName + "\" : \" {panel:title=Lista de Componentes} || NOME || TIPO || STATUS || LINGUAGEM || PROC || CHAVE || FILLER || \\n";
+                "\"fields\" : { \"" + customFieldName + "\" : \" {panel:title=Lista de Componentes} || NOME || TIPO || STATUS || LINGUAGEM || PROC || CHAVE || \\n";
 
         String jsonComponentes = "";
 
@@ -49,19 +49,16 @@ public class Lista_De_Componentes {
             chave = componente.substring(35, 43);
             filler = componente.substring(43);
 
-            jsonComponentes = jsonComponentes + ListaDeComponentesConcatenada(componenteName, tipo, status, linguagem, proc, chave, filler) + "\\n ";
+            jsonComponentes = jsonComponentes + ListaDeComponentesConcatenada(componenteName, tipo, status, linguagem, proc, chave) + "\\n ";
         }
 
-        json = json + jsonComponentes + "\" {panel} } }";
+        json = json + jsonComponentes + " {panel} \" } }";
 
         String idOrquestrador = Jira_Manager.SetIdOrquestrador(message.substring(43,48));
 
         Integer updateStatusCode = 0;
 
         updateStatusCode = Put.UpdateListaDeComponentes(managerArgsParse.getUrl(), managerArgsParse.getUser(), managerArgsParse.getPassword(), idOrquestrador, json);
-
-        Jira_Rest jira_rest = new Jira_Rest(managerArgsParse);
-        br.com.pabloraimundo.jira_api.Fields statusTicket = jira_rest.GetStatusTicket(idOrquestrador);
 
         if(updateStatusCode == 204) {
             MessageLog.SysOut(MessageLog.ListaDeComponentesUpdated(managerArgsParse, idOrquestrador));
@@ -89,8 +86,8 @@ public class Lista_De_Componentes {
         return  messages;
     }
 
-    private String ListaDeComponentesConcatenada(String componente, String tipo, String status, String linguagem, String proc, String chave, String filler){
-        String colunas = " | " + componente + " | " + tipo + " | " + status + " | " + linguagem + " | " + proc + " | " + chave + " | " + filler + " | ";
+    private String ListaDeComponentesConcatenada(String componente, String tipo, String status, String linguagem, String proc, String chave){
+        String colunas = " | " + componente + " | " + tipo + " | " + status + " | " + linguagem + " | " + proc + " | " + chave + " | ";
 
         return colunas;
     }

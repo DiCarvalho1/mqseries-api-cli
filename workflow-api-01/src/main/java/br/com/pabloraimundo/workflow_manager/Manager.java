@@ -46,11 +46,16 @@ public class Manager {
 
 				if (string.substring(0, 7).equalsIgnoreCase("QPCCHGM")){
 					Lista_De_Componentes lista_de_componentes = new Lista_De_Componentes(managerArgsParse);
-					lista_de_componentes.Update(string);
-					if (voltasNoLoop == message.size()) {
-						main(args);
+					try {
+						lista_de_componentes.Update(string);
+					} catch (Exception e){
+						System.out.println(e);
+					} finally {
+						if (voltasNoLoop == message.size()) {
+							main(args);
+						}
+						voltasNoLoop++;
 					}
-					voltasNoLoop++;
 				} else {
 
 					String apiChangeman = string.substring(0, 15);
