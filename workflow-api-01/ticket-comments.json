@@ -56,7 +56,15 @@
             "status_mainframe": "FALHA NA EXECUÇÃO",    
             "message_template": "{ \n \"body\": \"*+<***status***>+* \\n Status:  {color:#de350b}*FALHA*{color} \\n Mainframe: *FALHA NA EXECUÇÃO* \\n Mensagem: *{color:#172b4d}<***returntype***>{color}<***returncode***>* - *<***mensagemMQ***>* \\n Site: *<***siteMQ***>* \\n Instância: *<***instanciaMQ***>* \" \n }"
         }
-    ]
+    ],
+    "tabela_lista": {
+        "lista_de_componentes": {
+            "key": "{ \n \"body\": \" Lista de componentes atualizada \"}" 
+        },
+        "lista_de_conflitos": {
+            "key": "{ \n \"body\": \" Lista de conflitos atualizada \"}"
+        }
+    }
 }
 
 
