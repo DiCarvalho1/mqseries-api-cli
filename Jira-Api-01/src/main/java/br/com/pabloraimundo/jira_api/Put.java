@@ -49,11 +49,11 @@ public class 	Put {
 //	    System.out.println(response.getStatusLine().getStatusCode());
 
 		if(response.getStatusLine().getStatusCode() == 400){
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode() + ". Verifique se o campo desejado existe e está visível");
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto a api Jira. Status Code: " + response.getStatusLine().getStatusCode() + ". Verifique se o campo desejado existe e esta visivel");
 		}
 
 		if(response.getStatusLine().getStatusCode() != 204) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto à api Jira. Status Code: " + response.getStatusLine().getStatusCode());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao atualizar Status Mainframe junto a api Jira. Status Code: " + response.getStatusLine().getStatusCode());
 		}
 	
 	}

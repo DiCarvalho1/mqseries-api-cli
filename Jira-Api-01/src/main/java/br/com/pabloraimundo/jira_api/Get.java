@@ -29,7 +29,7 @@ public class Get {
 		ClientResponse resp = webResource.accept("application/json").header("Authorization", "Basic " + authStr).get(ClientResponse.class);
 
 		if(resp.getStatus() != 200) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar à api Jira. Possivelmente o número da Issue informada está incorreto. Status code: " + resp.getStatus());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar a api Jira. Possivelmente o numero da Issue informada esta incorreto. Status code: " + resp.getStatus());
 		}
 		
 		String output = resp.getEntity(String.class);
@@ -56,7 +56,7 @@ public class Get {
 		ClientResponse resp = webResource.accept("application/json").header("Authorization", "Basic " + authStr).get(ClientResponse.class);
 
 		if(resp.getStatus() != 200) {
-			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar à api Jira. Possivelmente o número da Issue informada está incorreto. Status code: " + resp.getStatus());
+			System.out.println(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " - Erro ao conectar a api Jira. Possivelmente o numero da Issue informada esta incorreto. Status code: " + resp.getStatus());
 		}
 
 		String output = resp.getEntity(String.class);
